@@ -7,20 +7,31 @@ pipeline{
 
     stages{
         stage('Clone the Project'){
-           git branch: 'main', url: 'github.com:Indeshwar/DemoSpringProject.git' 
+           steps{
+            git 'https://git@github.com:Indeshwar/DemoSpringProject.git'
+           }
         }
 
         stage('Compilation'){
-            sh "./mvnw clean install -DskipTests"
+            steps{
+                sh './mvnw clean install -DskipTests'
+            }
+            
         }
 
         stage('Test and Deployment'){
             stage('Running unit tests'){
-                sh "./mvnw test -Punit"
+                steps{
+                    sh './mvnw test -Punit'
+                }
+                
             }
 
             stage('Deployment'){
-                sh 'nohup ./mvnw spring-boot:run -Dserver.port=8081 &'
+                steps{
+                    sh 'nohup ./mvnw spring-boot:run -Dserver.port=8081 &'
+                }
+                
             }
 
         }
