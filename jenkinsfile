@@ -6,9 +6,15 @@ pipeline{
     }
 
     stages{
-        stage('Test'){
+        stage('Clone the Project'){
             steps{
-                sh 'mvn --version'
+                git branch: 'main', url: 'https://github.com/Indeshwar/demo-java-jenkins'
+            }
+        }
+
+        stage('Compliation'){
+            steps{
+                sh 'mvn clean install'
             }
         }
     }
