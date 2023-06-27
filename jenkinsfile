@@ -1,14 +1,25 @@
 pipeline{
     agent{
         docker{
-            image image 'maven:3.8.1-adoptopenjdk-11'
+            //install maven and jdk-11 inside the docker
+            image 'maven:3.8.1-adoptopenjdk-11'
         }
     }
 
     stages{
-        stage('Test'){
+        stage('Clone the Project'){
             steps{
-                sh 'mvn --version'
+                git branch: 'main', url: 'https://github.com/Indeshwar/demo-java-jenkins'
+            }
+        }
+
+        stage('Compliation'){
+            steps{
+                //You are calling the mvn executable, which means you need Maven installed on your machine.
+                //You are using the clean command, which will delete all previously compiled 
+                //Java .class files and resources (like .properties) in your project. Your build will start from a clean slate.
+                //Install command will then compile, test & package your Java project and even install/copy your built .jar/.war file into your local Maven repository
+                sh 'mvn clean install'
             }
         }
     }
