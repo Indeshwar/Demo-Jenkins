@@ -5,19 +5,19 @@ pipeline{
         }
     }
 
-    stages{
-        stage('Clone the Project'){
-           steps{
-            git 'https://git@github.com:Indeshwar/DemoSpringProject.git'
-           }
-        }
+    // stages{
+    //     stage('Clone the Project'){
+    //        steps{
+    //         git 'https://git@github.com:Indeshwar/DemoSpringProject.git'
+    //        }
+    //     }
 
-        stage('Compilation'){
-            steps{
-                sh './mvnw clean install -DskipTests'
-            }
+    //     stage('Compilation'){
+    //         steps{
+    //             sh './mvnw clean install -DskipTests'
+    //         }
             
-        }
+    //     }
 
         // stage('Test and Deployment'){
         //     stage('Running unit tests'){
@@ -37,5 +37,5 @@ pipeline{
         // }
 
     
-    }
+    // }
 }
