@@ -5,6 +5,14 @@ pipeline{
         }
     }
 
+    stages{
+        stage('Clone the Project'){
+            steps{
+                git branch: 'main', url: 'github.com:Indeshwar/demo-java-jenkins.git'
+            }
+        }
+    }
+
     // stages{
     //     stage('Clone the Project'){
     //        steps{
