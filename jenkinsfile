@@ -2,7 +2,7 @@ pipeline{
     agent{
         docker{
             //install maven and jdk-11 inside the docker
-            image 'maven:3.8.1-adoptopenjdk-17'
+            image 'maven:3.8.1-adoptopenjdk-11'
         }
     }
 
