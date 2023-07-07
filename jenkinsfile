@@ -25,36 +25,17 @@ pipeline{
             }
         }
 
-        enviroment{
-                DOCKER_IMAGE = "indeshwar/ultimate-cicd:${BUILD_NUMBER}"
-        }
-        
-
-
-        stage('Build'){
-            steps{
-                sh 'docker build -t ${DOCKER_IMAGE }'
+        stage('Static Code Analysis'){
+            enviroment{
+                SONAR_URL = "http://34.173.51.7:9000"
             }
-                
-        }
 
-        stage('Login') {
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-             }
-
-        }
-
-        stage('Push'){
             steps{
-                sh 'docker push DOCKER_IMAGE'
+                withCredentials([credentialsId: 'sonar', variable: 'SONAR_AUTH_TOKEN']){
+                    sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+                }
             }
         }
-    }
 
-    post{
-        always{
-            sh 'docker logout'
-        }
     }
 }
