@@ -7,19 +7,21 @@ pipeline{
     }
 
     stages{
-        stage('Clone the Project'){
+        stage('Checkout'){
             steps{
                 git branch: 'main', url: 'https://github.com/Indeshwar/demo-java-jenkins'
             }
         }
 
-        stage('Compliation'){
+        stage('Build and Test'){
             steps{
                 //You are calling the mvn executable, which means you need Maven installed on your machine.
                 //You are using the clean command, which will delete all previously compiled 
                 //Java .class files and resources (like .properties) in your project. Your build will start from a clean slate.
                 //Install command will then compile, test & package your Java project and even install/copy your built .jar/.war file into your local Maven repository
-                sh 'mvn clean install'
+                
+                //build the project and create a jar file
+                sh 'mvn clean package'
             }
         }
     }
