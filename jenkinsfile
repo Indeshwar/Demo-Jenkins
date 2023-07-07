@@ -2,10 +2,8 @@ pipeline{
     agent{
         docker{
             
-            image 'docker:latest'
+            image 'maven:latest'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
-            //install maven and jdk-11 inside the docker
-            image 'maven:3.8.1-adoptopenjdk-11'
         }
     }
 
@@ -24,7 +22,7 @@ pipeline{
                 //Install command will then compile, test & package your Java project and even install/copy your built .jar/.war file into your local Maven repository
                 
                 //build the project and create a jar file
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
 
