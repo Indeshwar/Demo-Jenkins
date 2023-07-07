@@ -4,6 +4,7 @@ pipeline{
             //install maven and jdk-11 inside the docker
             image 'maven:3.8.1-adoptopenjdk-11'
             args '--user root -v /var/run/docker.sock:/var/run/docker.sock' //Mount the docker socket to access host's Docker daemon
+            
         }
     }
 
