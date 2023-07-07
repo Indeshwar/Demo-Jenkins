@@ -2,7 +2,9 @@ pipeline{
     agent{
         docker{
             //install maven and jdk-11 inside the docker
-            image 'maven:3.8.1-adoptopenjdk-11'
+            image 'maven:latest'
+            args '-v /root/.m2:/root/.m2' //here you can map local maven repo, this let you to reuse local artifacts
+
         }
     }
 
@@ -37,18 +39,18 @@ pipeline{
             }
         }
 
-        stage('Build Docker image'){
-            environment{
-                dockerImage = ''
-                registry = 'indeshwar/java-app'
-            }
+        // stage('Build Docker image'){
+        //     environment{
+        //         dockerImage = ''
+        //         registry = 'indeshwar/java-app'
+        //     }
 
-            steps{
-                script {
-                    dockerImage = docker.build registry
-                }
-            }
-        }
+        //     steps{
+        //         script {
+        //             dockerImage = docker.build registry
+        //         }
+        //     }
+        // }
 
     }
 }
