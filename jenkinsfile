@@ -26,12 +26,12 @@ pipeline{
         }
 
         stage('Static Code Analysis'){
-            enviroment{
+            environment{
                 SONAR_URL = "http://34.173.51.7:9000"
             }
 
             steps{
-                withCredentials([credentialsId: 'sonar', variable: 'SONAR_AUTH_TOKEN']){
+                withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_AUTH_TOKEN')]){
                     sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
                 }
             }
