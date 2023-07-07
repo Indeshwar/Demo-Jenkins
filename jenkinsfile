@@ -39,6 +39,15 @@ pipeline{
             }
         }
 
+        stage('Build Docker Image'){
+            steps{    
+                script{
+                    sh 'docker build -t indeshwar/java-app .'
+                }
+            }
+        }
+
+
         // stage('Build Docker image'){
         //     environment{
         //         dockerImage = ''
