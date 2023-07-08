@@ -1,7 +1,11 @@
 pipeline{
-    agent any
-    tools{
-        maven 'maven:3.8.1-adoptopenjdk-11'
+    agent{
+        docker{
+            //install maven and jdk-11 inside the docker
+            image 'maven:3.8.1-adoptopenjdk-11'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+
+        }
     }
 
     stages{
@@ -23,17 +27,30 @@ pipeline{
             }
         }
 
-        
-        stage('Build Docker Image'){
-            steps{
-                script{
-                    sh 'docker build -t indeshwar/my-app-1.0 .'
-                }
+        // stage('Static Code Analysis'){
+        //     environment{
+        //         SONAR_URL = "http://34.173.51.7:9000"
+        //     }
 
+        //     steps{
+        //         withCredentials([string(credentialsId: 'sonar_id', variable: 'SONAR_AUTH_TOKEN')]){
+        //             sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+        //         }
+        //     }
+        // }
+
+        stage('Build Docker image'){
+            environment{
+                dockerImage = ''
+                registry = 'indeshwar/java-app'
+            }
+
+            steps{
+                script {
+                    dockerImage = docker.build registry
+                }
             }
         }
-
-
 
     }
 }
