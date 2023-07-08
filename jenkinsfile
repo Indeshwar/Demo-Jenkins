@@ -26,39 +26,6 @@ pipeline{
             }
         }
 
-        stage('Static Code Analysis'){
-            environment{
-                SONAR_URL = "http://34.173.51.7:9000"
-            }
-
-            steps{
-                withCredentials([string(credentialsId: 'sonar_id', variable: 'SONAR_AUTH_TOKEN')]){
-                    sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
-                }
-            }
-        }
-
-        stage('Build Docker Image'){
-            steps{    
-                script{
-                    sh 'docker build -t indeshwar/java-app .'
-                }
-            }
-        }
-
-
-        // stage('Build Docker image'){
-        //     environment{
-        //         dockerImage = ''
-        //         registry = 'indeshwar/java-app'
-        //     }
-
-        //     steps{
-        //         script {
-        //             dockerImage = docker.build registry
-        //         }
-        //     }
-        // }
 
     }
 }
