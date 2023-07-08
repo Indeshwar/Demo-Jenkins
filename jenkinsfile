@@ -3,6 +3,7 @@ pipeline{
         docker{
             //install maven and jdk-11 inside the docker
             image 'maven:3.8.1-adoptopenjdk-11'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
 
         }
     }
@@ -26,17 +27,17 @@ pipeline{
             }
         }
 
-        stage('Static Code Analysis'){
-            environment{
-                SONAR_URL = "http://34.173.51.7:9000"
-            }
+        // stage('Static Code Analysis'){
+        //     environment{
+        //         SONAR_URL = "http://34.173.51.7:9000"
+        //     }
 
-            steps{
-                withCredentials([string(credentialsId: 'sonar_id', variable: 'SONAR_AUTH_TOKEN')]){
-                    sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
-                }
-            }
-        }
+        //     steps{
+        //         withCredentials([string(credentialsId: 'sonar_id', variable: 'SONAR_AUTH_TOKEN')]){
+        //             sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+        //         }
+        //     }
+        // }
 
         // stage('Build Docker image'){
         //     environment{
