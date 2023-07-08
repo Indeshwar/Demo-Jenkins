@@ -26,6 +26,15 @@ pipeline{
             }
         }
 
+        
+        stage('Build Docker Image'){
+            steps{
+                script{
+                    sh 'docker build -t indeshwar/my-app-1.0 .'
+                }
+
+            }
+        }
 
 
 
