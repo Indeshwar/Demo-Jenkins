@@ -40,15 +40,8 @@ pipeline{
         // }
 
         stage('Build Docker image'){
-            environment{
-                dockerImage = ''
-                registry = 'indeshwar/java-app'
-            }
-
             steps{
-                script {
-                    dockerImage = docker.build registry
-                }
+                sh 'docker run hello-world'
             }
         }
 
